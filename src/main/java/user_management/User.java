@@ -50,7 +50,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("%-10s - %s", name, email);
+        return String.format("%s - %s", name, email);
     }
 
     @Override
@@ -60,5 +60,17 @@ public class User {
             return true;
         }
         return false;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
