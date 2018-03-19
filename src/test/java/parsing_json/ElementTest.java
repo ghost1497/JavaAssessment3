@@ -144,5 +144,4 @@ public class ElementTest {
         expected.add(1);
         assertEquals(expected, element.getShells());
     }
-
 }
