@@ -46,8 +46,8 @@ public class UserCollection {
     }
 
     public User attemptLogin(String email, String password) throws UserAuthenticationFailedException {
-        for (User user : userArrayList) {
-            if (user.getEmail().equals(email) &&  user.getPassword().matches(password)) {
+        for(User user : userArrayList){
+            if(user.getEmail().equals(email) && user.getPassword().matches(password)){
                 return user;
             }
         }
@@ -57,16 +57,18 @@ public class UserCollection {
     public int createUser(String name, String email, String password) throws EmailNotAvailableException, InvalidEmailException, PasswordTooSimpleException {
         Pattern domainP = Pattern.compile("[@]+[a-z]*");
         Matcher domainM = domainP.matcher(email);
-        Pattern tld = Pattern.compile("[\\.]+[a-z]*");
+        Pattern nameP = Pattern.compile("\\w+[@]");
+        Matcher nameM = nameP.matcher(email);
+        Pattern tld = Pattern.compile("((\\b[\\.]+[a-z]{1,10}\\b)|(\\b([\\.]+[a-z]{1,10})+[\\.]+[a-z]{1,3}\\b))");
         Matcher tldM = tld.matcher(email);
         Pattern nonWord = Pattern.compile("([a-z]|[0-9])*+[@]+([a-z]|[0-9])*+[\\.]+([a-z]|[0-9])*");
         Matcher nonWordM = nonWord.matcher(email);
         for (User user : userArrayList) {
-            if (user.getPassword().equals(email)) {
+            if (user.getEmail().equals(email)) {
                 throw new EmailNotAvailableException();
             }
         }
-        if (email.equals("") || !domainM.find() || !tldM.find() || !nonWordM.matches()) {
+        if (email.equals("") || !nameM.find() || !domainM.find() || !tldM.find() || !nonWordM.matches()) {
             throw new InvalidEmailException();
         }
 

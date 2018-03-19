@@ -20,7 +20,7 @@ public class Password {
         // Note: normally a match method would include a check to see if the hash is valid but for this exam we will
         //       assume that all the passwords we will check are valid. All of the password hashes in the users.json
         //       file are valid so there should be no worry about this as long as you don't overwrite them manually.
-        if(hash.substring(0,6).equals(hashPassword(password_plaintext).substring(0,6))){
+        if(BCrypt.checkpw(password_plaintext, hash)){
             return true;
         }
         return false;
