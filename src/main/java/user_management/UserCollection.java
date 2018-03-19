@@ -61,7 +61,7 @@ public class UserCollection {
         Matcher nameM = nameP.matcher(email);
         Pattern tld = Pattern.compile("((\\b[\\.]+[a-z]{1,10}\\b)|(\\b([\\.]+[a-z]{1,10})+[\\.]+[a-z]{1,3}\\b))");
         Matcher tldM = tld.matcher(email);
-        Pattern nonWord = Pattern.compile("([a-z]|[0-9])*+[@]+([a-z]|[0-9])*+[\\.]+([a-z]|[0-9])*");
+        Pattern nonWord = Pattern.compile("([a-z]|[0-9])*+[@]+([a-z]|[0-9])*+((\\b[\\.]+[a-z]{1,10}\\b)|(\\b([\\.]+[a-z]{1,10})+[\\.]+[a-z]{1,3}\\b))");
         Matcher nonWordM = nonWord.matcher(email);
         for (User user : userArrayList) {
             if (user.getEmail().equals(email)) {
@@ -79,9 +79,9 @@ public class UserCollection {
         if (password.length() < 8 || password.equals(password.toLowerCase()) || password.equals(password.toUpperCase()) || !noNumM.find() || !specCharM.find()) {
             throw new PasswordTooSimpleException();
         }
-        int id = userArrayList.get(userArrayList.size()-1).getId() + 1;
-        new User(id, name, email, password);
-
+        int id = userArrayList.get(userArrayList.size()-1).getId()+1;
+        User user = new User(id, name, email, password);
+        add(user);
         return id;
     }
 
