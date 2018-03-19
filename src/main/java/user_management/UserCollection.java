@@ -1,6 +1,8 @@
 package user_management;
 
 import parsing_json.Element;
+import user_management.security.UserAuthenticationFailedException;
+import user_management.validation.EmailNotAvailableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +42,20 @@ public class UserCollection {
         return null;
     }
 
-    public User attemptLogin(String email, String password) {
-        return null;
+    public User attemptLogin(String email, String password) throws UserAuthenticationFailedException{
+        for(User user : userArrayList){
+            if(user.getEmail().equals(email) && user.getPassword().equals(password) && user.getPassword().matches(password)){
+                return user;
+            }
+        }
+        throw new UserAuthenticationFailedException();
     }
 
     public int createUser(String name, String email, String password) {
+        for(User user : userArrayList){
+        if(user.getPassword().equals(email)){
+            throw new EmailNotAvailableException();
+        }
         return 0;
     }
 }
